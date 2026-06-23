@@ -1,0 +1,221 @@
+/* ==========================================================================
+   To-Do app
+   ========================================================================== */
+
+.view-todo {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: var(--space-5);
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .view-todo { grid-template-columns: 1fr; }
+  .todo-cats { order: 2; }
+  .todo-main { order: 1; }
+}
+
+.todo-cats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  position: sticky;
+  top: calc(var(--header-h) + var(--space-3));
+}
+.todo-cats__title {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.todo-cats .chip {
+  justify-content: flex-start;
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+}
+
+.todo-main { min-width: 0; }
+
+.todo-filters {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+}
+.todo-filters .input-wrap { flex: 1; min-width: 220px; max-width: 360px; }
+
+.todo-body { min-width: 0; }
+
+.todo-section__title {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: var(--space-4) 0 var(--space-2);
+}
+.todo-section__title:first-child { margin-top: 0; }
+
+.todo-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.todo-row {
+  display: grid;
+  grid-template-columns: 28px 28px 1fr auto;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: all var(--dur-fast) var(--ease-out);
+  animation: slide-in-left var(--dur-base) var(--ease-out) both;
+  position: relative;
+}
+.todo-row:hover {
+  border-color: var(--color-border-strong);
+  transform: translateX(2px);
+  box-shadow: var(--shadow-sm);
+}
+.todo-row.is-selected {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-glow);
+}
+.todo-row.is-done .todo-row__title {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+}
+.todo-row.is-done { opacity: 0.7; }
+
+.todo-row__check {
+  width: 22px; height: 22px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-border-strong);
+  background: var(--color-surface);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  transition: all var(--dur-fast) var(--ease-out);
+}
+.todo-row__check:hover { border-color: var(--color-accent); }
+.todo-row__check.is-checked {
+  background: var(--color-success);
+  border-color: var(--color-success);
+}
+.todo-row__check .icon { width: 14px; height: 14px; }
+
+.todo-row__star {
+  background: transparent;
+  cursor: pointer;
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-text-faint);
+  transition: color var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
+}
+.todo-row__star:hover { color: var(--color-warning); transform: scale(1.15); }
+.todo-row__star.is-starred { color: var(--color-warning); }
+.todo-row__star .icon { width: 18px; height: 18px; }
+
+.todo-row__body { min-width: 0; }
+.todo-row__title {
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-base);
+  word-wrap: break-word;
+  display: flex; align-items: center; gap: var(--space-2);
+}
+.todo-row__meta {
+  display: flex; align-items: center; gap: var(--space-2);
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+.todo-row__notes { font-style: italic; }
+
+.todo-row__actions {
+  display: flex;
+  gap: var(--space-1);
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+.todo-row:hover .todo-row__actions { opacity: 1; }
+
+.tag-row__cat {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  line-height: 1.5;
+}
+
+.todo-theme {
+  width: auto;
+  min-width: 140px;
+}
+
+/* Daily view */
+.todo-daily {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+.todo-day-group__title {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semibold);
+  margin-bottom: var(--space-2);
+  color: var(--color-accent);
+}
+
+/* Weekly view (kanban-style columns) */
+.todo-weekly {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--space-2);
+  overflow-x: auto;
+}
+@media (max-width: 900px) {
+  .todo-weekly { grid-template-columns: repeat(3, minmax(180px, 1fr)); }
+}
+.todo-week-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-2);
+  min-height: 200px;
+}
+.todo-week-col__head {
+  text-align: center;
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+}
+.todo-week-col__head.is-today {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+.todo-week-col__dow { font-size: var(--fs-xs); text-transform: uppercase; font-weight: var(--fw-semibold); }
+.todo-week-col__date { font-size: var(--fs-xl); font-weight: var(--fw-bold); }
+.todo-week-col__body { display: flex; flex-direction: column; gap: 4px; }
+.todo-week-col__empty { text-align: center; padding: var(--space-2); }
+.todo-week-col .todo-row {
+  padding: var(--space-2);
+  font-size: var(--fs-xs);
+  grid-template-columns: 16px 1fr;
+}
+.todo-week-col .todo-row__star,
+.todo-week-col .todo-row__actions { display: none; }
+.todo-week-col .todo-row__title { font-size: var(--fs-xs); }
+.todo-week-col .todo-row__meta { display: none; }

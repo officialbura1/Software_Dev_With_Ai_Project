@@ -1,0 +1,6 @@
+{
+  "name": "Productivity Dashboard",
+  "description": "An elegant, highly cohesive dual-theme productivity dashboard containing Calendar, Calculator, To-Do List, Real-time Clock, and Translator modules.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

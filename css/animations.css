@@ -1,0 +1,110 @@
+/* ==========================================================================
+   Animations · @keyframes + utility classes + reduced-motion clamp
+   ========================================================================== */
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-down {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.94); }
+  60%  { opacity: 1; transform: scale(1.02); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.55); }
+  70%  { box-shadow: 0 0 0 14px rgba(99, 102, 241, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-4px); }
+  40%      { transform: translateX(4px); }
+  60%      { transform: translateX(-3px); }
+  80%      { transform: translateX(3px); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes blink {
+  0%, 50%   { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* View-switch motion */
+.view-enter  { animation: fade-up var(--dur-page) var(--ease-out) both; }
+.view-leave  { animation: fade-down var(--dur-slow) var(--ease-in-out) both; }
+
+/* Reusable utility classes */
+.anim-fade-up    { animation: fade-up var(--dur-base) var(--ease-out) both; }
+.anim-pop-in     { animation: pop-in var(--dur-base) var(--ease-spring) both; }
+.anim-slide-in   { animation: slide-in-left var(--dur-base) var(--ease-out) both; }
+.anim-pulse      { animation: pulse-ring 1.6s var(--ease-out) infinite; }
+.anim-shake      { animation: shake 380ms var(--ease-in-out); }
+
+/* Spinner */
+.spinner {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--color-track-strong);
+  border-top-color: var(--color-accent);
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+}
+.spinner.lg { width: 28px; height: 28px; border-width: 3px; }
+
+/* Skeleton shimmer */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface-2) 0%,
+    var(--color-track) 50%,
+    var(--color-surface-2) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* Reduced motion: clamp animations, allow instant transitions only */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
